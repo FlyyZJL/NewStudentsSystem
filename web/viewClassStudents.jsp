@@ -19,7 +19,7 @@
     <ul>
         <li>姓名: ${student.name}</li>
         <li>性别: ${student.gender}</li>
-        <li>籍贯: ${student.nativePlace}</li>
+        <li>籍贯: ${student.origin}</li>
         <li>出生日期: ${student.birthDate}</li>
         <li>民族: ${student.ethnicity}</li>
         <li>电话: ${student.phone}</li>

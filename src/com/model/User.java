@@ -3,9 +3,9 @@ package com.model;
 // 用户实体类
 public class User {
     private int id;  // 自增ID
-    private int userid;  // 用户ID
     private String username;  // 用户名
     private String password;  // 密码
+    private String classId;
     private String userType;  // 用户类型
     private String department;
     private String studentClass;
@@ -18,14 +18,6 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getUserid() {
-        return userid;
-    }
-
-    public void setUserid(int userid) {
-        this.userid = userid;
     }
 
     public String getUsername() {
@@ -43,7 +35,13 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+    public String getClassId() {
+        return classId;
+    }
 
+    public void setClassId(String classId) {
+        this.classId = classId;
+    }
     public String getUserType() {
         return userType;
     }

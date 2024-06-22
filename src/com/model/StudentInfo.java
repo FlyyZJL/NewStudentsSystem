@@ -12,6 +12,7 @@ public class StudentInfo {
     private String ethnicity;  // 民族
     private String phone;  // 电话
     private String email;  // 邮箱
+    private String classId;
 
     // Getter 和 Setter 方法
     public int getId() {
@@ -76,5 +77,13 @@ public class StudentInfo {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getClassId() {
+        return classId;
+    }
+
+    public void setClassId(String classId) {
+        this.classId = classId;
     }
 }

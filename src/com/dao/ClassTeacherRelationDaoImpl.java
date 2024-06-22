@@ -13,7 +13,7 @@ public class ClassTeacherRelationDaoImpl implements ClassTeacherRelationDao {
     @Override
     public void addRelation(ClassTeacherRelation relation) {
         // 添加关系
-        String sql = "INSERT INTO class_teacher_relation (teacher_id, class_id) VALUES (?, ?)";
+        String sql = "INSERT INTO class_teacher_relation (userid, class_id) VALUES (?, ?)";
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, relation.getTeacherId());

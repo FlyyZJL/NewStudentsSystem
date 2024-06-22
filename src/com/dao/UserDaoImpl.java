@@ -27,20 +27,21 @@ public class UserDaoImpl implements UserDao {
 //    }
 @Override
 public void addUser(User user) {
-    String sql = "INSERT INTO users (username, password, user_type, department, class, first_Login) VALUES (?, ?, ?, ?, ?, ?)";
+    String sql = "INSERT INTO users (username, password, class_id, department, user_type, first_login) VALUES (?, ?, ?, ?, ?, ?)";
     try (Connection conn = DBUtil.getConnection();
          PreparedStatement ps = conn.prepareStatement(sql)) {
         ps.setString(1, user.getUsername());
         ps.setString(2, user.getPassword());
-        ps.setString(3, user.getUserType());
+        ps.setObject(3, user.getClassId()); // 可以为 null
         ps.setString(4, user.getDepartment());
-        ps.setString(5, user.getStudentClass());
-        ps.setBoolean(6, true);
+        ps.setString(5, user.getUserType());
+        ps.setBoolean(6, user.isFirstLogin());
         ps.executeUpdate();
-    } catch (Exception e) {
+    } catch (SQLException e) {
         e.printStackTrace();
     }
 }
+
     @Override
     public int getUserIdByUsername(String username) {
         int userId = -1;
@@ -61,16 +62,17 @@ public void addUser(User user) {
 
     @Override
     public void updateUser(User user) {
-        // 更新用户
-        String sql = "UPDATE users SET username=?, password=?, user_type=?, first_login=? WHERE id=?";
-        try (Connection connection = DBUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, user.getUsername());
-            statement.setString(2, user.getPassword());
-            statement.setString(3, user.getUserType());
-            statement.setBoolean(4, user.isFirstLogin());
-            statement.setInt(5, user.getUserid());
-            statement.executeUpdate();
+        String sql = "UPDATE users SET username = ?, password = ?, class_id = ?, department = ?, user_type = ?, first_login = ? WHERE id = ?";
+                try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getPassword());
+            ps.setObject(3, user.getClassId()); // 可以为 null
+            ps.setString(4, user.getDepartment());
+            ps.setString(5, user.getUserType());
+            ps.setBoolean(6, user.isFirstLogin());
+            ps.setInt(7, user.getId());
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -86,7 +88,7 @@ public void addUser(User user) {
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 User user = new User();
-                user.setUserid(rs.getInt("userid"));
+                user.setId(rs.getInt("id"));
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 user.setUserType(rs.getString("user_type"));
@@ -101,48 +103,51 @@ public void addUser(User user) {
 
     @Override
     public User getUserByUsername(String username) {
-        // 通过用户名获取用户
-        String sql = "SELECT * FROM users WHERE username=?";
-        try (Connection connection = DBUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, username);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                User user = new User();
-                user.setUserid(rs.getInt("id"));
-                user.setUsername(rs.getString("username"));
-                user.setPassword(rs.getString("password"));
-                user.setUserType(rs.getString("user_type"));
-                user.setFirstLogin(rs.getBoolean("first_login"));
-                return user;
+        String sql = "SELECT * FROM users WHERE username = ?";
+        User user = null;
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    user = new User();
+                    user.setId(rs.getInt("id"));
+                    user.setUsername(rs.getString("username"));
+                    user.setPassword(rs.getString("password"));
+                    user.setDepartment(rs.getString("department"));
+                    user.setUserType(rs.getString("user_type"));
+                    user.setFirstLogin(rs.getBoolean("first_login"));
+                    user.setClassId(rs.getString("class_id"));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return user;
     }
 
     @Override
     public List<User> getAllUsers() {
-        // 获取所有用户
+        List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM users";
-        List<User> userList = new ArrayList<>();
-        try (Connection connection = DBUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet rs = statement.executeQuery()) {
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 User user = new User();
-                user.setUserid(rs.getInt("userid"));
+                user.setId(rs.getInt("id"));
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
+                user.setClassId(rs.getString("class_id"));
+                user.setDepartment(rs.getString("department"));
                 user.setUserType(rs.getString("user_type"));
                 user.setFirstLogin(rs.getBoolean("first_login"));
-                userList.add(user);
+                users.add(user);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return userList;
+        return users;
     }
 
     @Override
@@ -156,5 +161,27 @@ public void addUser(User user) {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    @Override
+    public List<User> getAllTeachers() {
+        List<User> teachers = new ArrayList<>();
+        String sql = "SELECT * FROM users WHERE user_type = 'teacher'";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                user.setDepartment(rs.getString("department"));
+                user.setUserType(rs.getString("user_type"));
+                user.setFirstLogin(rs.getBoolean("first_login"));
+                teachers.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return teachers;
     }
 }

@@ -20,7 +20,7 @@
 <ul>
     <li><a href="changePassword.jsp">修改密码</a></li>
     <li><a href="submitPersonalInfo.jsp">提交个人信息</a></li>
-    <li><a href="viewClassStudents.jsp">查看全班学生信息</a></li>
+    <li><a href="viewClassStudents">查看全班学生信息</a></li>
     <li><a href="addStudent.jsp">添加学生</a></li>
     <li><a href="modifyStudentInfo.jsp">修改学生信息</a></li>
 </ul>

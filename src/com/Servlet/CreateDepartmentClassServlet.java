@@ -25,7 +25,7 @@ public class CreateDepartmentClassServlet extends HttpServlet {
 
         // 创建院系班级对象
         DepartmentClass departmentClass = new DepartmentClass();
-        departmentClass.setId(departmentId);
+        departmentClass.setDepartmentId(departmentId);
         departmentClass.setClassId(classId);
         departmentClass.setDepartmentName(departmentName);
         departmentClass.setClassName(className);

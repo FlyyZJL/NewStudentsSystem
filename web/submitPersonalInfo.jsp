@@ -19,17 +19,22 @@
     <input type="text" id="name" name="name" required><br>
     <label for="gender">性别：</label>
     <input type="text" id="gender" name="gender" required><br>
-    <label for="nativePlace">籍贯：</label>
-    <input type="text" id="nativePlace" name="nativePlace" required><br>
+    <label for="origin">籍贯：</label>
+    <input type="text" id="origin" name="origin" required><br>
     <label for="birthDate">出生日期：</label>
     <input type="date" id="birthDate" name="birthDate" required><br>
     <label for="ethnicity">民族：</label>
-    <input type="text" id="ethnicity" name="ethnicity" required><br>
+    <input type="text" id="ethnicity" name="ethnicity"><br>
     <label for="phone">电话：</label>
-    <input type="text" id="phone" name="phone" required><br>
+    <input type="text" id="phone" name="phone"><br>
     <label for="email">邮箱：</label>
-    <input type="email" id="email" name="email" required><br>
+    <input type="email" id="email" name="email"><br>
+
+    <!-- 隐藏域包含班级ID -->
+    <input type="hidden" id="classId" name="classId" value="<%= request.getAttribute("classId") %>">
+
     <button type="submit">提交</button>
 </form>
 </body>
 </html>
+

@@ -25,7 +25,7 @@ public class ViewClassStudentsServlet extends HttpServlet {
 
         // 根据教师ID查询其所教班级的所有学生信息
         StudentInfoDao studentInfoDao = new StudentInfoDaoImpl();
-        List<StudentInfo> students = studentInfoDao.getStudentsByTeacherId(user.getUserid());
+        List<StudentInfo> students = studentInfoDao.getStudentsByTeacherId(user.getId());
 
         // 将学生信息存入请求中并转发到JSP页面
         request.setAttribute("students", students);

@@ -11,5 +11,6 @@ public interface UserDao {
     int getUserIdByUsername(String username);  // 通过用户ID获取用户名
     User getUserByUsername(String username);  // 通过用户名获取用户
     List<User> getAllUsers();  // 获取所有用户
+    List<User> getAllTeachers();
     void deleteUser(int id);  // 删除用户
 }

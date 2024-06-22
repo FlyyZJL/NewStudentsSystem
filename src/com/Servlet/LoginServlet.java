@@ -28,6 +28,7 @@ public class LoginServlet extends HttpServlet {
             // 将用户信息存储到 session 中
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
+            session.setAttribute("username",user.getUsername());
 
             // 根据用户类型跳转到不同的主页
             String userType = user.getUserType();

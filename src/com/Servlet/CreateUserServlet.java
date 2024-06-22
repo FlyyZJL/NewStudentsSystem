@@ -30,7 +30,7 @@ public class CreateUserServlet extends HttpServlet {
             String department = request.getParameter("department");
             String studentClass = request.getParameter("class");
             user.setDepartment(department);
-            user.setStudentClass(studentClass);
+            user.setClassId(studentClass);
         }
 
         UserDao userDao = new UserDaoImpl();
