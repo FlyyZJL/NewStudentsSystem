@@ -1,15 +1,15 @@
 package com.Servlet;
 
-        import com.dao.UserDao;
-        import com.dao.UserDaoImpl;
-        import com.model.User;
+import com.dao.UserDao;
+import com.dao.UserDaoImpl;
+import com.model.User;
 
-        import javax.servlet.ServletException;
-        import javax.servlet.annotation.WebServlet;
-        import javax.servlet.http.HttpServlet;
-        import javax.servlet.http.HttpServletRequest;
-        import javax.servlet.http.HttpServletResponse;
-        import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @WebServlet("/createUser")
 public class CreateUserServlet extends HttpServlet {
