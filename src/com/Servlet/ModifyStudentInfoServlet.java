@@ -14,6 +14,8 @@ package com.Servlet;
 @WebServlet("/modifyStudentInfo")
 public class ModifyStudentInfoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
         // 获取表单数据
         int studentId = Integer.parseInt(request.getParameter("studentId"));
         String name = request.getParameter("name");

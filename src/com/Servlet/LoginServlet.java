@@ -13,6 +13,8 @@ package com.Servlet;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
         // 获取用户名和密码
         String username = request.getParameter("username");
         String password = request.getParameter("password");

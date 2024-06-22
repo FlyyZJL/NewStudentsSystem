@@ -16,6 +16,8 @@ package com.Servlet;
 @WebServlet("/submitPersonalInfo")
 public class SubmitPersonalInfoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
         // 获取表单数据
         String name = request.getParameter("name");
         String gender = request.getParameter("gender");

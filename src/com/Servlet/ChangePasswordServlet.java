@@ -14,6 +14,8 @@ import java.io.IOException;
 @WebServlet("/changePassword")
 public class ChangePasswordServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
         // 获取当前密码和新密码
         String currentPassword = request.getParameter("currentPassword");
         String newPassword = request.getParameter("newPassword");

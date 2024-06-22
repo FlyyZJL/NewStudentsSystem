@@ -17,6 +17,8 @@ package com.Servlet;
 @WebServlet("/viewClassStudents")
 public class ViewClassStudentsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
         // 获取当前用户
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");

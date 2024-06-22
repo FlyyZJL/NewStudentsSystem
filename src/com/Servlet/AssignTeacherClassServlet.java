@@ -13,6 +13,8 @@ package com.Servlet;
 @WebServlet("/assignTeacherClass")
 public class AssignTeacherClassServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
         // 获取表单数据
         int teacherId = Integer.parseInt(request.getParameter("teacherId"));
         int classId = Integer.parseInt(request.getParameter("classId"));

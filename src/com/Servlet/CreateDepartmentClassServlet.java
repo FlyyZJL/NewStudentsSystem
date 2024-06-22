@@ -14,6 +14,8 @@ package com.Servlet;
 @WebServlet("/createDepartmentClass")
 public class CreateDepartmentClassServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
         // 获取表单数据
         String departmentName = request.getParameter("departmentName");
         String className = request.getParameter("className");

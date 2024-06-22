@@ -17,6 +17,8 @@ import java.sql.Date;
 @WebServlet("/addStudent")
 public class AddStudentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
         // 获取表单数据
         String username = request.getParameter("username");
         String password = request.getParameter("password");
