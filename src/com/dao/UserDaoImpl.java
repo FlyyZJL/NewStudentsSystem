@@ -25,11 +25,28 @@ public class UserDaoImpl implements UserDao {
             e.printStackTrace();
         }
     }
+    @Override
+    public int getUserIdByUsername(String username) {
+        int userId = -1;
+        String sql = "SELECT id FROM users WHERE username = ?";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    userId = rs.getInt("id");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userId;
+    }
 
     @Override
     public void updateUser(User user) {
         // 更新用户
-        String sql = "UPDATE users SET username=?, password=?, user_type=?, first_login=? WHERE userid=?";
+        String sql = "UPDATE users SET username=?, password=?, user_type=?, first_login=? WHERE id=?";
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, user.getUsername());
@@ -46,7 +63,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getUserById(int id) {
         // 通过ID获取用户
-        String sql = "SELECT * FROM users WHERE userid=?";
+        String sql = "SELECT * FROM users WHERE id=?";
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
@@ -115,7 +132,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void deleteUser(int id) {
         // 删除用户
-        String sql = "DELETE FROM users WHERE userid=?";
+        String sql = "DELETE FROM users WHERE id=?";
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
