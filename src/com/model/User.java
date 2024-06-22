@@ -7,6 +7,8 @@ public class User {
     private String username;  // 用户名
     private String password;  // 密码
     private String userType;  // 用户类型
+    private String department;
+    private String studentClass;
     private boolean firstLogin;  // 是否第一次登录
 
     // Getter 和 Setter 方法
@@ -56,5 +58,21 @@ public class User {
 
     public void setFirstLogin(boolean firstLogin) {
         this.firstLogin = firstLogin;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getStudentClass() {
+        return studentClass;
+    }
+
+    public void setStudentClass(String studentClass) {
+        this.studentClass = studentClass;
     }
 }

@@ -25,6 +25,39 @@ public class DepartmentClassDaoImpl implements DepartmentClassDao {
             e.printStackTrace();
         }
     }
+    @Override
+    public boolean existsDepartmentId(int departmentId) {
+        String sql = "SELECT COUNT(*) FROM department_class WHERE id = ?";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, departmentId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean existsClassId(int classId) {
+        String sql = "SELECT COUNT(*) FROM department_class WHERE class_id = ?";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, classId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     @Override
     public void updateDepartmentClass(DepartmentClass departmentClass) {

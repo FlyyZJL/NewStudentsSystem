@@ -10,21 +10,37 @@ import java.util.List;
 // 用户数据访问对象实现类
 public class UserDaoImpl implements UserDao {
 
-    @Override
-    public void addUser(User user) {
-        // 添加用户
-        String sql = "INSERT INTO users (username, password, user_type, first_login) VALUES (?, ?, ?, ?)";
-        try (Connection connection = DBUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, user.getUsername());
-            statement.setString(2, user.getPassword());
-            statement.setString(3, user.getUserType());
-            statement.setBoolean(4, user.isFirstLogin());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//    @Override
+//    public void addUser(User user) {
+//        // 添加用户
+//        String sql = "INSERT INTO users (username, password, user_type, first_login) VALUES (?, ?, ?, ?)";
+//        try (Connection connection = DBUtil.getConnection();
+//             PreparedStatement statement = connection.prepareStatement(sql)) {
+//            statement.setString(1, user.getUsername());
+//            statement.setString(2, user.getPassword());
+//            statement.setString(3, user.getUserType());
+//            statement.setBoolean(4, user.isFirstLogin());
+//            statement.executeUpdate();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
+@Override
+public void addUser(User user) {
+    String sql = "INSERT INTO users (username, password, user_type, department, class, first_Login) VALUES (?, ?, ?, ?, ?, ?)";
+    try (Connection conn = DBUtil.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, user.getUsername());
+        ps.setString(2, user.getPassword());
+        ps.setString(3, user.getUserType());
+        ps.setString(4, user.getDepartment());
+        ps.setString(5, user.getStudentClass());
+        ps.setBoolean(6, true);
+        ps.executeUpdate();
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+}
     @Override
     public int getUserIdByUsername(String username) {
         int userId = -1;
