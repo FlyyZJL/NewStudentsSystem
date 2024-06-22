@@ -52,5 +52,9 @@ public class SubmitPersonalInfoServlet extends HttpServlet {
         } else if ("teacher".equals(user.getUserType())) {
             response.sendRedirect("teacher.jsp");
         }
+
+
+
+        
     }
 }
