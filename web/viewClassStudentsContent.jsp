@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 枫翎月影
-  Date: 2024/6/22
-  Time: 9:39
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -135,7 +128,7 @@
                     <input type="hidden" name="studentId" value="${student.id}">
                     <button type="submit">修改</button>
                 </form>
-                <form action="deleteStudent" method="post">
+                <form class="delete-form" action="deleteStudent" method="post">
                     <input type="hidden" name="studentId" value="${student.id}">
                     <button type="submit" class="delete">删除</button>
                 </form>
@@ -145,53 +138,9 @@
 </ul>
 <div class="pagination">
     <!-- 分页控件 -->
-    <button onclick="prevPage()">上一页</button>
+    <button class="prev-page">上一页</button>
     <span class="page-info">第 <span id="current-page"></span> 页，共 <span id="total-pages"></span> 页</span>
-    <button onclick="nextPage()">下一页</button>
+    <button class="next-page">下一页</button>
 </div>
-
-<script>
-    const studentsPerPage = 10;
-    let currentPage = 1;
-    const students = document.querySelectorAll('.student');
-    const totalPages = Math.ceil(students.length / studentsPerPage);
-
-    function showPage(page) {
-        students.forEach((student, index) => {
-            student.style.display = (index >= (page - 1) * studentsPerPage && index < page * studentsPerPage) ? 'flex' : 'none';
-        });
-        document.getElementById('current-page').textContent = page;
-        document.getElementById('total-pages').textContent = totalPages;
-    }
-
-    function nextPage() {
-        if (currentPage < totalPages) {
-            currentPage++;
-            showPage(currentPage);
-        }
-    }
-
-    function prevPage() {
-        if (currentPage > 1) {
-            currentPage--;
-            showPage(currentPage);
-        }
-    }
-
-    document.getElementById('search-input').addEventListener('input', function() {
-        const filter = this.value.toLowerCase();
-        students.forEach(student => {
-            const name = student.querySelector('.name').textContent.toLowerCase();
-            if (name.includes(filter)) {
-                student.style.display = 'flex';
-            } else {
-                student.style.display = 'none';
-            }
-        });
-    });
-
-    // 初始显示第一页
-    showPage(currentPage);
-</script>
 </body>
 </html>

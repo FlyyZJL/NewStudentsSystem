@@ -1,6 +1,5 @@
 package com.Servlet;
 
-
 import com.dao.StudentInfoDao;
 import com.dao.StudentInfoDaoImpl;
 import com.model.StudentInfo;
@@ -19,6 +18,7 @@ public class ViewClassStudentsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
+
         // 获取当前用户
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
@@ -30,9 +30,11 @@ public class ViewClassStudentsServlet extends HttpServlet {
         // 将学生信息存入请求中并转发到JSP页面
         request.setAttribute("students", students);
         try {
-            request.getRequestDispatcher("viewClassStudents.jsp").forward(request, response);
+            request.getRequestDispatcher("viewClassStudentsContent.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 }
+
+

@@ -1,0 +1,23 @@
+package com.Servlet;
+
+        import com.dao.StudentInfoDao;
+        import com.dao.StudentInfoDaoImpl;
+        import com.model.StudentInfo;
+
+        import javax.servlet.ServletException;
+        import javax.servlet.annotation.WebServlet;
+        import javax.servlet.http.HttpServlet;
+        import javax.servlet.http.HttpServletRequest;
+        import javax.servlet.http.HttpServletResponse;
+        import java.io.IOException;
+
+@WebServlet("/editStudent")
+public class EditStudentServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int studentId = Integer.parseInt(request.getParameter("studentId"));
+        StudentInfoDao studentInfoDao = new StudentInfoDaoImpl();
+        StudentInfo student = studentInfoDao.getStudentInfoById(studentId);
+        request.setAttribute("student", student);
+        request.getRequestDispatcher("editStudent.jsp").forward(request, response);
+    }
+}

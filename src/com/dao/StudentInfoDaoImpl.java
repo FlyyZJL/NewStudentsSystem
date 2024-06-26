@@ -111,11 +111,11 @@ public class StudentInfoDaoImpl implements StudentInfoDao {
     }
 
     @Override
-    public void deleteStudentInfo(int id) {
+    public void deleteStudentById(int studentId) {
         String sql = "DELETE FROM students_info WHERE id = ?";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, id);
+            ps.setInt(1, studentId);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

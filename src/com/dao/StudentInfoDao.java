@@ -8,7 +8,9 @@ public interface StudentInfoDao {
     void addStudentInfo(StudentInfo studentInfo);
     List<StudentInfo> getStudentsByClassId(int classId);
     List<StudentInfo> getStudentsByTeacherId(int teacherId);
+    // 更新学生信息
     void updateStudentInfo(StudentInfo studentInfo);
-    void deleteStudentInfo(int id);
+    // 删除学生信息
+    void deleteStudentById(int studentId);
     StudentInfo getStudentInfoById(int id);
 }
