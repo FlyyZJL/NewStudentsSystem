@@ -26,6 +26,7 @@ public class UpdateStudentServlet extends HttpServlet {
         String ethnicity = request.getParameter("ethnicity");
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
+        String classid = request.getParameter("classId");
 
         StudentInfo studentInfo = new StudentInfo();
         studentInfo.setId(studentId);
@@ -36,6 +37,7 @@ public class UpdateStudentServlet extends HttpServlet {
         studentInfo.setEthnicity(ethnicity);
         studentInfo.setPhone(phone);
         studentInfo.setEmail(email);
+        studentInfo.setClassId(classid);
 
         StudentInfoDao studentInfoDao = new StudentInfoDaoImpl();
         studentInfoDao.updateStudentInfo(studentInfo);

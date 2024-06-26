@@ -14,7 +14,7 @@
 </head>
 <body>
 <h1>修改学生信息</h1>
-<form action="updateStudent" method="post">
+<form id="updateForm" action="updateStudent" method="post">
     <input type="hidden" name="studentId" value="${student.id}">
     <label for="name">姓名：</label>
     <input type="text" id="name" name="name" value="${student.name}" required><br>
@@ -30,7 +30,32 @@
     <input type="text" id="phone" name="phone" value="${student.phone}"><br>
     <label for="email">邮箱：</label>
     <input type="email" id="email" name="email" value="${student.email}"><br>
+    <label for="classId">班级：</label>
+    <input type="text" id="classId" name="classId" value="${student.classId}"><br>
     <button type="submit">保存</button>
 </form>
+
+<script>
+    document.getElementById('updateForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+        const params = new URLSearchParams(formData).toString();
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', form.action, true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                alert('修改成功');
+                loadClassStudents(); // 重新加载学生列表
+            } else {
+                alert('修改失败');
+            }
+        };
+        xhr.send(params);
+    });
+</script>
+
 </body>
 </html>
