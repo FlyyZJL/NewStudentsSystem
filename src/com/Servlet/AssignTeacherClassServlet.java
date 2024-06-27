@@ -32,7 +32,9 @@ public class AssignTeacherClassServlet extends HttpServlet {
         classTeacherRelationDao.addRelation(classTeacherRelation);
 
         // 重定向到管理员界面
-        response.sendRedirect("admin.jsp");
+        String message = "分配班级成功！";
+        String script = "<script>alert('" + message + "'); window.top.location.href='admin.jsp';</script>";
+        response.getWriter().write(script);
     }
 }
 

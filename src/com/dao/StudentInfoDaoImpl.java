@@ -164,7 +164,9 @@ public class StudentInfoDaoImpl implements StudentInfoDao {
     @Override
     public List<StudentInfo> getPendingStudents() {
         List<StudentInfo> students = new ArrayList<>();
-        String sql = "SELECT * FROM students_info WHERE status = 'Pending'";
+        String sql = "SELECT si.* FROM students_info si " +
+                "JOIN class_teacher_relation ctr ON si.class_id = ctr.class_id " +
+                "WHERE ctr.userid = ? AND si.status = 'Pending'";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -186,6 +188,34 @@ public class StudentInfoDaoImpl implements StudentInfoDao {
             e.printStackTrace();
         }
         return students;
+    }
+    @Override
+    public StudentInfo getStudentInfoByUsername(String username) {
+        StudentInfo studentInfo = null;
+        String sql = "SELECT * FROM students_info WHERE name = ?";
+
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    studentInfo = new StudentInfo();
+                    studentInfo.setId(rs.getInt("id"));
+                    studentInfo.setName(rs.getString("name"));
+                    studentInfo.setGender(rs.getString("gender"));
+                    studentInfo.setOrigin(rs.getString("origin"));
+                    studentInfo.setBirthDate(rs.getDate("birth_date"));
+                    studentInfo.setEthnicity(rs.getString("ethnicity"));
+                    studentInfo.setPhone(rs.getString("phone"));
+                    studentInfo.setEmail(rs.getString("email"));
+                    studentInfo.setClassId(rs.getString("class_id"));
+                    studentInfo.setStatus(rs.getString("status"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return studentInfo;
     }
 
 }

@@ -38,15 +38,18 @@ public class CreateDepartmentClassServlet extends HttpServlet {
         boolean classExists = departmentClassDao.existsClassId(classId);
 
         if (departmentExists || classExists) {
-            // 如果院系ID或班级ID存在，设置错误消息并转发回表单页面
-            request.setAttribute("errorMessage", "院系ID或班级ID已存在！");
-            request.getRequestDispatcher("createDepartmentClass.jsp").forward(request, response);
+            // 如果院系ID或班级ID存在，弹出错误消息
+            String message = "院系ID或班级ID已存在,请重新提交";
+            String script = "<script>alert('" + message + "'); window.top.location.href='admin.jsp';</script>";
+            response.getWriter().write(script);
         } else {
             // 将院系班级信息存入数据库
             departmentClassDao.addDepartmentClass(departmentClass);
 
             // 重定向到管理员界面
-            response.sendRedirect("admin.jsp");
+            String message = "提交成功！";
+            String script = "<script>alert('" + message + "'); window.top.location.href='admin.jsp';</script>";
+            response.getWriter().write(script);
         }
     }
 }

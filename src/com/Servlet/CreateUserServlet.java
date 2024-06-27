@@ -36,6 +36,8 @@ public class CreateUserServlet extends HttpServlet {
         UserDao userDao = new UserDaoImpl();
         userDao.addUser(user);
 
-        response.sendRedirect("admin.jsp");
+        String message = "用户创建成功！";
+        String script = "<script>alert('" + message + "'); window.top.location.href='admin.jsp';</script>";
+        response.getWriter().write(script);
     }
 }

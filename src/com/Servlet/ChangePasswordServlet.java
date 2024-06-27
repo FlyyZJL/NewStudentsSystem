@@ -35,7 +35,12 @@ public class ChangePasswordServlet extends HttpServlet {
             if ("teacher".equals(user.getUserType())) {
                 response.sendRedirect("teacher.jsp");
             } else if ("student".equals(user.getUserType())) {
-                response.sendRedirect("student.jsp");
+
+                // 使用JavaScript弹出对话框提示修改成功，并跳转到登录页面
+                String message = "密码修改成功！";
+                String script = "<script>alert('" + message + "'); window.top.location.href='login.jsp';</script>";
+                response.getWriter().write(script);
+//                response.sendRedirect("login.jsp");
             }
         } else {
             // 当前密码错误，重定向到修改密码页面并显示错误消息

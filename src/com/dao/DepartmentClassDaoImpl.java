@@ -27,7 +27,7 @@ public class DepartmentClassDaoImpl implements DepartmentClassDao {
     }
     @Override
     public boolean existsDepartmentId(int departmentId) {
-        String sql = "SELECT COUNT(*) FROM department_class WHERE id = ?";
+        String sql = "SELECT COUNT(*) FROM department_class WHERE department_id = ?";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, departmentId);

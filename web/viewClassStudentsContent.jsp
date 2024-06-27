@@ -18,7 +18,6 @@
         }
         .search-container {
             text-align: right;
-            margin: 20px;
             margin-right: 100px;
         }
         .search-container input {

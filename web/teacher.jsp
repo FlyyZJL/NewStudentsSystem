@@ -58,6 +58,8 @@
     <%--<a href="#" onclick="showSection('submitPersonalInfo')">提交个人信息</a>--%>
     <a href="#" onclick="showSection('reviewStudents')">审核学生信息</a> <!-- 新增审核学生信息链接 -->
     <a href="#" onclick="showSection('changePassword')">修改密码</a>
+    <a href="login.jsp">退出系统</a>
+
 </div>
 
 <div class="content">
@@ -79,6 +81,7 @@
     <div id="reviewStudents" class="section" style="display:none;">
         <!-- 通过 AJAX 动态加载待审核学生信息 -->
     </div>
+
 </div>
 
 <script src="jquery-3.3.1.min.js"></script>
@@ -218,12 +221,17 @@
         $('#reviewStudents .approve-form').on('submit', function(event) {
             event.preventDefault();
             const $form = $(this);
+            const studentName = $form.find('input[name="studentName"]').val();
             $.ajax({
                 url: $form.attr('action'),
                 method: 'POST',
                 data: $form.serialize(),
                 success: function() {
                     loadPendingStudents(); // 重新加载待审核学生列表
+                    alert('学生 ' + studentName + ' 已通过审核');
+                },
+                error: function() {
+                    alert('出现错误，请重试');
                 }
             });
         });
@@ -231,12 +239,17 @@
         $('#reviewStudents .reject-form').on('submit', function(event) {
             event.preventDefault();
             const $form = $(this);
+            const studentName = $form.find('input[name="studentName"]').val();
             $.ajax({
                 url: $form.attr('action'),
                 method: 'POST',
                 data: $form.serialize(),
                 success: function() {
                     loadPendingStudents(); // 重新加载待审核学生列表
+                    alert('学生 ' + studentName + ' 已成功打回');
+                },
+                error: function() {
+                    alert('出现错误，请重试');
                 }
             });
         });

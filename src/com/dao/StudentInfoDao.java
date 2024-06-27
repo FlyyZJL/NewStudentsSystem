@@ -15,4 +15,5 @@ public interface StudentInfoDao {
     StudentInfo getStudentInfoById(int id);
     void updateStudentStatus(int studentId, String status); // 新增方法
     List<StudentInfo> getPendingStudents();
+    StudentInfo getStudentInfoByUsername(String username);
 }

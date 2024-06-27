@@ -55,15 +55,16 @@
             cursor: pointer;
         }
         .search{
-            text-align: right;
+            display: flex;
+            justify-content: flex-end; /* 对齐到右边 */
+            margin-right: 100px;
+            margin-bottom: 0;
         }
         #search-input{
-            margin: 20px;
-            margin-right: 100px;
             width: 300px;
             height: 50px;
             padding: 10px;
-
+            margin-bottom: 0;
         }
         .student-list button:hover {
             background-color: #45a049;
@@ -97,7 +98,7 @@
 <body>
 <h1>审核学生信息</h1>
 <div class="search">
-    <input type="text" id="search-input" placeholder="搜索学生姓名..." class="form-control mb-3">
+    <input type="text" id="search-input" placeholder="搜索学生姓名..." class="form-control">
 </div>
 
 
@@ -126,11 +127,13 @@
             <span>
                 <form action="reviewStudentInfo" method="post" class="approve-form">
                     <input type="hidden" name="studentId" value="${students.id}">
+                    <input type="hidden" name="studentName" value="${students.name}">
                     <input type="hidden" name="action" value="approve">
                     <button type="submit">通过</button>
                 </form>
                 <form action="reviewStudentInfo" method="post" class="reject-form">
                     <input type="hidden" name="studentId" value="${students.id}">
+                    <input type="hidden" name="studentName" value="${students.name}">
                     <input type="hidden" name="action" value="reject">
                     <button type="submit" class="reject">打回</button>
                 </form>
