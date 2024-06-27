@@ -162,33 +162,36 @@ public class StudentInfoDaoImpl implements StudentInfoDao {
     }
 
     @Override
-    public List<StudentInfo> getPendingStudents() {
+    public List<StudentInfo> getPendingStudents(int teacherId) {
         List<StudentInfo> students = new ArrayList<>();
         String sql = "SELECT si.* FROM students_info si " +
                 "JOIN class_teacher_relation ctr ON si.class_id = ctr.class_id " +
                 "WHERE ctr.userid = ? AND si.status = 'Pending'";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                StudentInfo student = new StudentInfo();
-                student.setId(rs.getInt("id"));
-                student.setName(rs.getString("name"));
-                student.setGender(rs.getString("gender"));
-                student.setOrigin(rs.getString("origin"));
-                student.setBirthDate(rs.getDate("birth_date"));
-                student.setEthnicity(rs.getString("ethnicity"));
-                student.setPhone(rs.getString("phone"));
-                student.setEmail(rs.getString("email"));
-                student.setClassId(rs.getString("class_id"));
-                student.setStatus(rs.getString("status"));
-                students.add(student);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, teacherId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    StudentInfo student = new StudentInfo();
+                    student.setId(rs.getInt("id"));
+                    student.setName(rs.getString("name"));
+                    student.setGender(rs.getString("gender"));
+                    student.setOrigin(rs.getString("origin"));
+                    student.setBirthDate(rs.getDate("birth_date"));
+                    student.setEthnicity(rs.getString("ethnicity"));
+                    student.setPhone(rs.getString("phone"));
+                    student.setEmail(rs.getString("email"));
+                    student.setClassId(rs.getString("class_id"));
+                    student.setStatus(rs.getString("status"));
+                    students.add(student);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return students;
     }
+
     @Override
     public StudentInfo getStudentInfoByUsername(String username) {
         StudentInfo studentInfo = null;

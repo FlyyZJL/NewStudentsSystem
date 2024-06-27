@@ -55,9 +55,8 @@
         $(document).ready(function() {
             // 处理侧边栏链接点击事件
             $('ul.sidebar-menu li a').on('click', function(event) {
-                event.preventDefault();
-                var url = $(this).attr('href'); // 获取链接的 href 属性值
-                $('#iframeContent').attr('src', url); // 更新 iframe 的 src 属性加载页面内容
+                var url = $(this).data('url'); // 获取链接的data-url属性值
+                $('#iframeContent').attr('src', url); // 更新iframe的src属性加载页面内容
             });
 
             // 默认加载第一个链接的内容
@@ -73,9 +72,10 @@
             <h1>管理员界面</h1>
             <p>欢迎您，${user.username}！</p>
             <ul class="sidebar-menu">
-                <li><a href="createUser.jsp">添加用户</a></li>
-                <li><a href="createDepartmentClass.jsp">创建班级院系</a></li>
-                <li><a href="assignTeacherClass.jsp">分配班级和老师的关系</a></li>
+                <li><a href="#" data-url="createUser.jsp">添加用户</a></li>
+                <li><a href="#" data-url="createDepartmentClass.jsp">创建班级院系</a></li>
+                <li><a href="#" data-url="assignTeacherClass.jsp">分配班级和老师的关系</a></li>
+                <li><a href="login.jsp">退出系统</a></li>
             </ul>
         </div>
         <!-- 右侧内容区域 -->

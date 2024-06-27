@@ -12,4 +12,6 @@ public interface DepartmentClassDao {
     void deleteDepartmentClass(int id);  // 删除院系与班级
     boolean existsDepartmentId(int departmentId);  // 检查院系是否存在
     boolean existsClassId(int classId);  // 检查班级是否存在
+    String getDepartmentIdByName(String departmentName);
+    String getClassIdByName(String className);
 }

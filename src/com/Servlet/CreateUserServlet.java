@@ -1,5 +1,7 @@
 package com.Servlet;
 
+import com.dao.DepartmentClassDao;
+import com.dao.DepartmentClassDaoImpl;
 import com.dao.UserDao;
 import com.dao.UserDaoImpl;
 import com.model.User;
@@ -29,8 +31,12 @@ public class CreateUserServlet extends HttpServlet {
         if ("student".equals(userType)) {
             String department = request.getParameter("department");
             String studentClass = request.getParameter("class");
-            user.setDepartment(department);
-            user.setClassId(studentClass);
+            DepartmentClassDao departmentClassDao = new DepartmentClassDaoImpl();
+            String departmentId = departmentClassDao.getDepartmentIdByName(department);
+            String classId = departmentClassDao.getClassIdByName(studentClass);
+
+            user.setDepartment(departmentId);
+            user.setClassId(classId);
         }
 
         UserDao userDao = new UserDaoImpl();

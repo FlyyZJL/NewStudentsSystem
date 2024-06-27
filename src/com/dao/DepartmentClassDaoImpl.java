@@ -134,5 +134,39 @@ public class DepartmentClassDaoImpl implements DepartmentClassDao {
             e.printStackTrace();
         }
     }
+
+    public String getDepartmentIdByName(String departmentName) {
+        String departmentId = "";
+        String sql = "SELECT department_id FROM department_class WHERE department_name = ?";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, departmentName);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    departmentId = rs.getString("department_id");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return departmentId;
+    }
+
+    public String getClassIdByName(String className) {
+        String classId = "";
+        String sql = "SELECT class_id FROM department_class WHERE class_name = ?";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, className);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    classId = rs.getString("class_id");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return classId;
+    }
 }
 
