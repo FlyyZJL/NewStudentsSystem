@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>查看班级学生信息</title>
+    <title>本班学生信息</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,11 +19,11 @@
         .search-container {
             text-align: right;
             margin: 20px;
-            margin-right: 250px;
+            margin-right: 100px;
         }
         .search-container input {
             width: 300px;
-            height: 30px;
+            height: 50px;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
@@ -75,8 +75,11 @@
             background-color: #f44336;
         }
         .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            margin: 20px 0;
+            margin: 0 auto;
         }
         .pagination button {
             background-color: #4CAF50;
@@ -97,7 +100,7 @@
     </style>
 </head>
 <body>
-<h1>查看班级学生信息</h1>
+<h1>本班学生信息</h1>
 <div class="search-container">
     <input type="text" id="search-input" placeholder="搜索学生姓名...">
 </div>

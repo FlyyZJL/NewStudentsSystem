@@ -52,66 +52,80 @@
         <p>欢迎，${user.username}老师！</p>
     </div>
     <a href="#" onclick="showSection('viewClassStudents')">查看班级学生</a>
-    <a href="#" onclick="showSection('addStudent')">添加学生</a>
-    <a href="#" onclick="showSection('modifyStudentInfo')">修改学生信息</a>
+    <%--<a href="#" onclick="showSection('addStudent')">添加学生</a>--%>
+    <%--<a href="#" onclick="showSection('modifyStudentInfo')">修改学生信息</a>--%>
+
+    <%--<a href="#" onclick="showSection('submitPersonalInfo')">提交个人信息</a>--%>
+    <a href="#" onclick="showSection('reviewStudents')">审核学生信息</a> <!-- 新增审核学生信息链接 -->
     <a href="#" onclick="showSection('changePassword')">修改密码</a>
-    <a href="#" onclick="showSection('submitPersonalInfo')">提交个人信息</a>
 </div>
 
 <div class="content">
     <div id="viewClassStudents" class="section">
         <!-- 通过 AJAX 动态加载学生信息 -->
     </div>
-    <div id="addStudent" class="section" style="display:none;">
-        <%@ include file="addStudent.jsp" %>
-    </div>
-    <div id="modifyStudentInfo" class="section" style="display:none;">
-        <%@ include file="modifyStudentInfo.jsp" %>
-    </div>
+    <%--<div id="addStudent" class="section" style="display:none;">--%>
+        <%--<%@ include file="addStudent.jsp" %>--%>
+    <%--</div>--%>
+    <%--<div id="modifyStudentInfo" class="section" style="display:none;">--%>
+        <%--<%@ include file="modifyStudentInfo.jsp" %>--%>
+    <%--</div>--%>
     <div id="changePassword" class="section" style="display:none;">
         <%@ include file="changePassword.jsp" %>
     </div>
-    <div id="submitPersonalInfo" class="section" style="display:none;">
-        <%@ include file="submitPersonalInfo.jsp" %>
+    <%--<div id="submitPersonalInfo" class="section" style="display:none;">--%>
+        <%--<%@ include file="submitPersonalInfo.jsp" %>--%>
+    <%--</div>--%>
+    <div id="reviewStudents" class="section" style="display:none;">
+        <!-- 通过 AJAX 动态加载待审核学生信息 -->
     </div>
 </div>
 
+<script src="jquery-3.3.1.min.js"></script>
 <script>
     function showSection(sectionId) {
-        const sections = document.querySelectorAll('.section');
-        sections.forEach(section => {
-            section.style.display = section.id === sectionId ? 'block' : 'none';
-        });
+        $('.section').hide();
+        $('#' + sectionId).show();
 
         if (sectionId === 'viewClassStudents') {
             loadClassStudents();
+        } else if (sectionId === 'reviewStudents') {
+            loadPendingStudents();
         }
     }
 
     function loadClassStudents() {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'viewClassStudents', true);
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                document.getElementById('viewClassStudents').innerHTML = xhr.responseText;
-                initStudentList(); // 初始化学生列表功能
+        $.ajax({
+            url: 'viewClassStudents',
+            method: 'GET',
+            success: function(response) {
+                $('#viewClassStudents').html(response);
+                initClassStudentList(); // 初始化学生列表功能
             }
-        };
-        xhr.send();
+        });
     }
 
-    function initStudentList() {
+    function loadPendingStudents() {
+        $.ajax({
+            url: 'viewPendingStudents',
+            method: 'GET',
+            success: function(response) {
+                $('#reviewStudents').html(response);
+                initReviewStudentList(); // 初始化审核列表功能
+            }
+        });
+    }
+
+    function initClassStudentList() {
         const studentsPerPage = 10;
         let currentPage = 1;
-        const students = document.querySelectorAll('.student');
-        const totalPages = Math.ceil(students.length / studentsPerPage);
+        const $students = $('#viewClassStudents .student');
+        const totalPages = Math.ceil($students.length / studentsPerPage);
 
         function showPage(page) {
-            students.forEach((student, index) => {
-                student.style.display = (index >= (page - 1) * studentsPerPage && index < page * studentsPerPage) ? 'flex' : 'none';
-            });
-            document.getElementById('current-page').textContent = page;
-            document.getElementById('total-pages').textContent = totalPages;
+            $students.hide().slice((page - 1) * studentsPerPage, page * studentsPerPage).show();
+            $('#viewClassStudents #current-page').text(page);
+            $('#viewClassStudents #total-pages').text(totalPages);
         }
 
         function nextPage() {
@@ -128,40 +142,101 @@
             }
         }
 
-        document.querySelector('.next-page').addEventListener('click', nextPage);
-        document.querySelector('.prev-page').addEventListener('click', prevPage);
+        $('#viewClassStudents .next-page').on('click', nextPage);
+        $('#viewClassStudents .prev-page').on('click', prevPage);
 
-        document.getElementById('search-input').addEventListener('input', function() {
-            const filter = this.value.toLowerCase();
-            students.forEach(student => {
-                const name = student.querySelector('.name').textContent.toLowerCase();
-                if (name.includes(filter)) {
-                    student.style.display = 'flex';
-                } else {
-                    student.style.display = 'none';
+        $('#viewClassStudents #search-input').on('input', function() {
+            const filter = $(this).val().toLowerCase();
+            $students.each(function() {
+                const name = $(this).find('.name').text().toLowerCase();
+                $(this).toggle(name.includes(filter));
+            });
+        });
+
+        $('#viewClassStudents .delete-form').on('submit', function(event) {
+            event.preventDefault();
+            if (confirm('确定要删除这个学生吗？')) {
+                const $form = $(this);
+                $.ajax({
+                    url: $form.attr('action'),
+                    method: 'POST',
+                    data: $form.serialize(),
+                    success: function() {
+                        loadClassStudents(); // 重新加载学生列表
+                    }
+                });
+            }
+        });
+
+        // 初始显示第一页
+        showPage(currentPage);
+    }
+
+    function initReviewStudentList() {
+        const studentsPerPage = 10;
+        let currentPage = 1;
+        const $students = $('#reviewStudents .student');
+        const totalPages = Math.ceil($students.length / studentsPerPage);
+
+        function showPage(page) {
+            $students.hide().slice((page - 1) * studentsPerPage, page * studentsPerPage).show();
+            $('#reviewStudents #current-page').text(page);
+            $('#reviewStudents #total-pages').text(totalPages);
+            updatePaginationButtons();
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                showPage(currentPage);
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        }
+
+        function updatePaginationButtons() {
+            $('#reviewStudents .prev-page').toggleClass('disabled', currentPage === 1);
+            $('#reviewStudents .next-page').toggleClass('disabled', currentPage === totalPages);
+        }
+
+        $('#reviewStudents .next-page').on('click', nextPage);
+        $('#reviewStudents .prev-page').on('click', prevPage);
+
+        $('#reviewStudents #search-input').on('input', function() {
+            const filter = $(this).val().toLowerCase();
+            $students.each(function() {
+                const name = $(this).find('.name').text().toLowerCase();
+                $(this).toggle(name.includes(filter));
+            });
+        });
+
+        $('#reviewStudents .approve-form').on('submit', function(event) {
+            event.preventDefault();
+            const $form = $(this);
+            $.ajax({
+                url: $form.attr('action'),
+                method: 'POST',
+                data: $form.serialize(),
+                success: function() {
+                    loadPendingStudents(); // 重新加载待审核学生列表
                 }
             });
         });
 
-        document.querySelectorAll('.delete-form').forEach(form => {
-            form.addEventListener('submit', function(event) {
-                if (!confirm('确定要删除这个学生吗？')) {
-                    event.preventDefault();
-                } else {
-                    // 使用 AJAX 提交表单，防止页面跳转
-                    event.preventDefault();
-                    const xhr = new XMLHttpRequest();
-                    xhr.open('POST', form.action, true);
-                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                    xhr.onload = function() {
-                        if (xhr.status === 200) {
-                            // 重新加载学生列表
-                            loadClassStudents();
-                        }
-                    };
-                    const formData = new FormData(form);
-                    const params = new URLSearchParams(formData).toString();
-                    xhr.send(params);
+        $('#reviewStudents .reject-form').on('submit', function(event) {
+            event.preventDefault();
+            const $form = $(this);
+            $.ajax({
+                url: $form.attr('action'),
+                method: 'POST',
+                data: $form.serialize(),
+                success: function() {
+                    loadPendingStudents(); // 重新加载待审核学生列表
                 }
             });
         });
@@ -171,7 +246,9 @@
     }
 
     // 初始加载班级学生信息
-    loadClassStudents();
+    $(document).ready(function() {
+        loadClassStudents();
+    });
 </script>
 </body>
 </html>

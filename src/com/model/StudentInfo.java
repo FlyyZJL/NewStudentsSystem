@@ -13,6 +13,7 @@ public class StudentInfo {
     private String phone;  // 电话
     private String email;  // 邮箱
     private String classId;
+    private String status; // 新增状态字段
 
     // Getter 和 Setter 方法
     public int getId() {
@@ -85,5 +86,13 @@ public class StudentInfo {
 
     public void setClassId(String classId) {
         this.classId = classId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

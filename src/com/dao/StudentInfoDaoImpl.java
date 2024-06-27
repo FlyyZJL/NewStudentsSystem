@@ -64,7 +64,7 @@ public class StudentInfoDaoImpl implements StudentInfoDao {
         List<StudentInfo> students = new ArrayList<>();
         String sql = "SELECT si.* FROM students_info si " +
                 "JOIN class_teacher_relation ctr ON si.class_id = ctr.class_id " +
-                "WHERE ctr.userid = ?";
+                "WHERE ctr.userid = ? AND si.status = 'approved'";
 
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -148,4 +148,44 @@ public class StudentInfoDaoImpl implements StudentInfoDao {
         }
         return student;
     }
+    @Override
+    public void updateStudentStatus(int studentId, String status) {
+        String sql = "UPDATE students_info SET status = ? WHERE id = ?";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, status);
+            ps.setInt(2, studentId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public List<StudentInfo> getPendingStudents() {
+        List<StudentInfo> students = new ArrayList<>();
+        String sql = "SELECT * FROM students_info WHERE status = 'Pending'";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                StudentInfo student = new StudentInfo();
+                student.setId(rs.getInt("id"));
+                student.setName(rs.getString("name"));
+                student.setGender(rs.getString("gender"));
+                student.setOrigin(rs.getString("origin"));
+                student.setBirthDate(rs.getDate("birth_date"));
+                student.setEthnicity(rs.getString("ethnicity"));
+                student.setPhone(rs.getString("phone"));
+                student.setEmail(rs.getString("email"));
+                student.setClassId(rs.getString("class_id"));
+                student.setStatus(rs.getString("status"));
+                students.add(student);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return students;
+    }
+
 }

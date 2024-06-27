@@ -34,28 +34,36 @@
     <input type="text" id="classId" name="classId" value="${student.classId}"><br>
     <button type="submit">保存</button>
 </form>
-
+<script src="jquery-3.3.1.min.js"></script>
 <script>
-    document.getElementById('updateForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const form = event.target;
-        const formData = new FormData(form);
-        const params = new URLSearchParams(formData).toString();
+    $(document).ready(function() {
+        $('#updateForm').on('submit', function(event) {
+            event.preventDefault();
+            const $form = $(this);
+            const params = $form.serialize();
 
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', form.action, true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                alert('修改成功');
-                loadClassStudents(); // 重新加载学生列表
-            } else {
-                alert('修改失败');
-            }
-        };
-        xhr.send(params);
+            $.ajax({
+                type: 'POST',
+                url: $form.attr('action'),
+                data: params,
+                success: function(response) {
+                    alert('修改成功');
+                    window.location.href = 'teacher.jsp';
+                    loadClassStudents(); // 重新加载学生列表
+                },
+                error: function() {
+                    alert('修改失败');
+                }
+            });
+        });
     });
+
+    function loadClassStudents() {
+        // 你的重新加载学生列表的代码
+        console.log('学生列表已加载');
+    }
 </script>
+
 
 </body>
 </html>
