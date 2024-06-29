@@ -15,10 +15,13 @@ package com.Servlet;
 @WebServlet("/updateStudent")
 public class UpdateStudentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // 设置请求和响应的字符编码为UTF-8，防止中文乱码
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
+        // 从请求中获取学生ID，并将其转换为整数类型
         int studentId = Integer.parseInt(request.getParameter("studentId"));
+        // 从请求中获取学生的各项个人信息
         String name = request.getParameter("name");
         String gender = request.getParameter("gender");
         String origin = request.getParameter("origin");
@@ -28,6 +31,7 @@ public class UpdateStudentServlet extends HttpServlet {
         String email = request.getParameter("email");
         String classid = request.getParameter("classId");
 
+        // 创建StudentInfo对象，并设置各属性值
         StudentInfo studentInfo = new StudentInfo();
         studentInfo.setId(studentId);
         studentInfo.setName(name);
@@ -39,9 +43,12 @@ public class UpdateStudentServlet extends HttpServlet {
         studentInfo.setEmail(email);
         studentInfo.setClassId(classid);
 
+        // 创建StudentInfoDao对象，并调用updateStudentInfo方法更新学生信息
         StudentInfoDao studentInfoDao = new StudentInfoDaoImpl();
         studentInfoDao.updateStudentInfo(studentInfo);
 
+        // 重定向到查看班级学生信息页面
         response.sendRedirect("viewClassStudents");
     }
 }
+

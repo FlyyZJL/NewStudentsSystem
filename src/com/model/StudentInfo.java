@@ -12,7 +12,7 @@ public class StudentInfo {
     private String ethnicity;  // 民族
     private String phone;  // 电话
     private String email;  // 邮箱
-    private String classId;
+    private String classId; //班级ID
     private String status; // 新增状态字段
 
     // Getter 和 Setter 方法

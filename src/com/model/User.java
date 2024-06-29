@@ -5,9 +5,9 @@ public class User {
     private int id;  // 自增ID
     private String username;  // 用户名
     private String password;  // 密码
-    private String classId;
+    private String classId;  //班级id
     private String userType;  // 用户类型
-    private String department;
+    private String department; //院系
     private String studentClass;
     private boolean firstLogin;  // 是否第一次登录
 

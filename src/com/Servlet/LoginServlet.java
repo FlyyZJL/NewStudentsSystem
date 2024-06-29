@@ -32,13 +32,13 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("username",user.getUsername());
 
             // 根据用户类型跳转到不同的主页
-            String userType = user.getUserType();
-            if ("admin".equals(userType)) {
-                response.sendRedirect("admin.jsp");
-            } else if ("teacher".equals(userType)) {
-                response.sendRedirect("teacher.jsp");
-            } else if ("student".equals(userType)) {
-                response.sendRedirect("student.jsp");
+                        String userType = user.getUserType();
+                if ("admin".equals(userType)) {
+                    response.sendRedirect("admin.jsp");
+                } else if ("teacher".equals(userType)) {
+                    response.sendRedirect("teacher.jsp");
+                } else if ("student".equals(userType)) {
+                    response.sendRedirect("student.jsp");
             }
         } else {
             // 用户名或密码错误，重定向到登录页面并显示错误消息
