@@ -39,7 +39,7 @@ public class CreateDepartmentClassServlet extends HttpServlet {
 
         if (departmentExists || classExists) {
             // 如果院系ID或班级ID存在，弹出错误消息
-            String message = "院系ID或班级ID已存在,请重新提交";
+                String message = "院系ID或班级ID已存在,请重新提交";
             String script = "<script>alert('" + message + "'); window.top.location.href='admin.jsp';</script>";
             response.getWriter().write(script);
         } else {

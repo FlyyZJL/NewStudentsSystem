@@ -8,8 +8,8 @@ import java.sql.SQLException;
 public class DBUtil {
     // 数据库连接信息
     private static final String URL = "jdbc:mysql://localhost:3306/newstudent?serverTimezone=GMT%2B8&useSSL=false";
-    private static final String USER = "root";
-    private static final String PASSWORD = "root";
+    private static final String USER = "newstudent";
+    private static final String PASSWORD = "F5wBaTpWZizdyiTt";
 
     static {
         try {

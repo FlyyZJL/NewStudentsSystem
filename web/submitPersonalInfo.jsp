@@ -51,12 +51,12 @@
         </div>
         <div class="form-group">
             <label for="phone">电话：</label>
-            <input type="text" class="form-control" id="phone" name="phone">
+            <input type="text" class="form-control" id="phone" name="phone" pattern="\d{11}" title="请输入11位数字" required>
         </div>
         <div class="form-group">
             <label for="email">邮箱：</label>
-            <input type="email" class="form-control" id="email" name="email">
-        </div>
+            <input type="email" class="form-control" id="email" name="email" pattern="^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$" title="请输入有效的电子邮箱地址" required>
+</div>
 
         <!-- 隐藏域包含班级ID -->
         <input type="hidden" id="classId" name="classId" value="<%= request.getAttribute("classId") %>">
@@ -69,4 +69,3 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
-

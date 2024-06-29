@@ -78,10 +78,17 @@
         function toggleStudentFields() {
             var userType = document.querySelector('input[name="userType"]:checked').value;
             var studentFields = document.getElementById("studentFields");
+            var department = document.getElementById("department");
+            var classField = document.getElementById("class");
+
             if (userType === "student") {
                 studentFields.style.display = "block";
+                department.setAttribute("required", "required");
+                classField.setAttribute("required", "required");
             } else {
                 studentFields.style.display = "none";
+                department.removeAttribute("required");
+                classField.removeAttribute("required");
             }
         }
     </script>

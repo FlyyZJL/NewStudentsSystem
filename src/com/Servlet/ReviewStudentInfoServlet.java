@@ -25,7 +25,6 @@ public class ReviewStudentInfoServlet extends HttpServlet {
             studentInfoDao.updateStudentStatus(studentId, "Approved");
         } else if ("reject".equals(action)) {
             studentInfoDao.deleteStudentById(studentId);
-//            studentInfoDao.updateStudentStatus(studentId, "Rejected");
         }
 
         // 重定向到教师主页

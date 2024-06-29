@@ -54,7 +54,6 @@
     <a href="#" onclick="showSection('viewClassStudents')">查看班级学生</a>
     <%--<a href="#" onclick="showSection('addStudent')">添加学生</a>--%>
     <%--<a href="#" onclick="showSection('modifyStudentInfo')">修改学生信息</a>--%>
-
     <%--<a href="#" onclick="showSection('submitPersonalInfo')">提交个人信息</a>--%>
     <a href="#" onclick="showSection('reviewStudents')">审核学生信息</a> <!-- 新增审核学生信息链接 -->
     <a href="#" onclick="showSection('changePassword')">修改密码</a>
