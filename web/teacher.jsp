@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <title>教师主页</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;

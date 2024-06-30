@@ -17,7 +17,7 @@
 <head>
     <meta charset="UTF-8">
     <title>分配班级和老师的关系</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;

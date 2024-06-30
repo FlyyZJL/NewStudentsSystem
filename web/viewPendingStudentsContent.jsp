@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <title>审核学生信息</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
     <style>
         .student-list {
             list-style-type: none;

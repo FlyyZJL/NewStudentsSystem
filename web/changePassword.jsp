@@ -11,7 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <title>修改密码</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
 <div class="container">
